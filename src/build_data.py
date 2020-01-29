@@ -71,8 +71,8 @@ def get_content(fname):
 
 def main():
     #fpath = sys.argv[1]
-    fpath = os.path.join("..","dat","sample")# sample
-    #fpath = os.path.join("..","..","..","data","nyt","xml")# full data set
+    #fpath = os.path.join("..","dat","sample")# sample
+    fpath = os.path.join("..","..","..","data","nyt","xml")# full data set
     fnames = sorted(glob.glob(os.path.join(fpath,"*.xml")))
     META, DATA = list(), list()
     for fname in fnames:
@@ -91,8 +91,8 @@ def main():
     DF_meta.columns = ["id", "publication_day_of_month", "publication_month", "publication_year","publication_day_of_week","dsk","print_page_number","print_section","print_column"]
     DF_content.columns = ["id","title","paragraphs"]
     datpath = os.path.join("..", "dat")
-    DF_meta.to_csv(os.path.join(datpath, "metadata_sample.csv"), index = False)
-    DF_content.to_csv(os.path.join(datpath, "content_sample.csv"), index = False)
+    DF_meta.to_csv(os.path.join(datpath, "metadata.csv"), index = False)
+    DF_content.to_csv(os.path.join(datpath, "content.csv"), index = False)
 
 if __name__ == '__main__':
     main()
