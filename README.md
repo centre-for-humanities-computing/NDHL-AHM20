@@ -19,7 +19,7 @@ source ndhl/bin/activate
 Clone repository and install requirements
 
 ```
-git clone https://github.com/centre-for-humanities-computing/ndhl-ahm2020.git
+git clone https://github.com/centre-for-humanities-computing/NDHL-AHM20.git
 pip install requirements.txt
 ```
 
