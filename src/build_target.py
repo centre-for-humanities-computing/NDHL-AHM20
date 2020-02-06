@@ -26,7 +26,13 @@ def normalize(df, col="paragraphs" ):
     for text in tqdm(articles):
         doc = nlp(text)
         lemmas = [word.lemma for sent in doc.sentences for word in sent.words]
-        art_lemma.append(" ".join(lemmas))
+        #TODO: need str test or try-catch all
+            ## TypeError: sequence item 1425: expected str instance, NoneType found
+            ## lemmatizer returns None
+        if type(lemmas) == str:
+            art_lemma.append(" ".join(lemmas))
+        else:
+            art_lemma.append(lemmas)
     
     return art_lemma
 

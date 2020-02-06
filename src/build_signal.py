@@ -11,7 +11,14 @@ import scipy as sp
 from util import load_pcl
 
 # vis and test
+import matplotlib as mpl
 import matplotlib.pyplot as plt
+mpl.rcParams.update({"text.usetex": False,
+                    "font.family": "Times New Roman",
+                    "font.serif": "cmr10",
+                    "mathtext.fontset": "cm",
+                    "axes.unicode_minus": False
+                    })
 
 
 def kld(p, q):
@@ -81,7 +88,7 @@ def main():
     # ASSERT: X is matrix
 
     # parameters P of function
-    window = 100# abstract time window because the data are not sampled on regular intervals (in sample)
+    window = 25# abstract time window because the data are not sampled on regular intervals (in sample)
     m = X.shape[0]
     weight = 0.0# parameter to set initial window for novelty and final window for transience
     impute = True
@@ -145,26 +152,30 @@ def main():
 
 
     if rescale:
-        print("rescale initiated")
+        print("rescaling")
         R = normalize(R)
         N_hat = normalize(N_hat, lower=0)
         T_hat = normalize(T_hat, lower=0)
 
-    T_hat[-window:] = np.zeros([window]) + weight
-    R[:window] = np.zeros([window]) + weight
-    R[-window:] = np.zeros([window]) + weight
+    N_hat[:window] = np.zeros([window]) + np.mean(N_hat[window:])
+    #T_hat[-window:] = np.zeros([window]) + weight
+    T_hat[-window:] = np.zeros([window]) + np.mean(T_hat[:-window])
+    #R[:window] = np.zeros([window]) + weight
+    #R[-window:] = np.zeros([window]) + weight
+    R[:window] = np.zeros([window]) + np.mean(R[window:-window])
+    R[-window:] = np.zeros([window]) + np.mean(R[window:-window])
 
     if impute:
         print("imputation initiated")
 
-    fig, ax = plt.subplots(1,3,figsize=(15,3))
+    fig, ax = plt.subplots(1,3,figsize=(14,3))
     ax[0].plot(N_hat,c="k")
     ax[0].axhline(np.mean(N_hat[window:]),c="r",linestyle=":")
     ax[1].plot(T_hat,c="k")
     ax[1].axhline(np.mean(T_hat[:-window]),c="r",linestyle=":")
     ax[2].plot(R,c="k")
     ax[2].axhline(np.mean(R[window:-window]),c="r",linestyle=":")
-    ax[2].axhline(0.,c="g",linestyle=":")
+    #ax[2].axhline(0.,c="g",linestyle=":")
     plt.tight_layout()
     plt.savefig("../fig/signal.png")
     plt.close()
