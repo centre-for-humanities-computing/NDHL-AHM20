@@ -23,10 +23,10 @@ git clone https://github.com/centre-for-humanities-computing/NDHL-AHM20.git
 pip install requirements.txt
 ```
 
-To run extract data and train model
+To run extract data and train model (see `main.sh` for pipeline)
 
 ```
-./main.sh
+
 ```
 
 ## Running the tests
